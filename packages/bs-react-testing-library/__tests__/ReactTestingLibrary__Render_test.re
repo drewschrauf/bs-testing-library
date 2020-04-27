@@ -21,6 +21,13 @@ module SimpleComponent = {
   };
 };
 
+module WrapperComponent = {
+  [@react.component]
+  let make = (~children) => {
+    <div> children </div>;
+  };
+};
+
 beforeEach(() => {
   %bs.raw
   {|
@@ -35,7 +42,8 @@ test("render without options", () => {
       expect(tl.render).toHaveBeenCalledWith(expect.any(Object),  {
         container: undefined,
         baseElement: undefined,
-        hydrate: undefined
+        hydrate: undefined,
+        wrapper: undefined
       })
     |}
   ]
@@ -50,13 +58,15 @@ test("render with options", () => {
       ~container=el,
       ~baseElement=el,
       ~hydrate=true,
+      ~wrapper=WrapperComponent.make,
     );
   [%bs.raw
     {|
       expect(tl.render).toHaveBeenCalledWith(expect.any(Object),  {
         container: expect.any(Object),
         baseElement: expect.any(Object),
-        hydrate: true
+        hydrate: true,
+        wrapper: expect.any(Function)
       })
     |}
   ]
