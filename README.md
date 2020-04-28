@@ -4,6 +4,7 @@ This project provide BuckleScript bindings for the [@testing-library](https://te
 
 - [@drewschrauf/bs-dom-testing-library](./packages/bs-dom-testing-library) - BuckleScript bindings for [@testing-library/dom](https://github.com/testing-library/dom-testing-library).
 - [@drewschrauf/bs-react-testing-library](./packages/bs-react-testing-library) - BuckleScript bindings for [@testing-library/react](https://github.com/testing-library/react-testing-library)
+- [@drewschrauf/bs-jest-dom](./packages/bs-jest-dom) - BuckleScript bindings for [@testing-library/jest-dom](https://github.com/testing-library/jest-dom)
 
 ## Motivation
 
