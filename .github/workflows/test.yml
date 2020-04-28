@@ -14,4 +14,4 @@ jobs:
     - name: Install dependencies
       run: yarn install
     - name: Run tests
-      run: yarn lerna run test --stream
+      run: yarn lerna run test --stream --concurrency 1
