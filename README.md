@@ -8,12 +8,12 @@ This project provide BuckleScript bindings for the [@testing-library](https://te
 
 ## Motivation
 
-This is not the only set of bindings available to use Testing Library with BuckleScript. [@wyze](https://github.com/wyze) has existing projects for [bs-dom-testing-library](https://github.com/wyze/bs-dom-testing-library), [bs-react-testing-library](https://github.com/wyze/bs-react-testing-library) and [bs-jest-dom](https://github.com/wyze/bs-jest-dom) which are linked to from the official Testing Library documentation.
+This is not the only set of bindings available to use Testing Library with BuckleScript. Projects exist for [bs-dom-testing-library](https://github.com/wyze/bs-dom-testing-library), [bs-react-testing-library](https://github.com/wyze/bs-react-testing-library) and [bs-jest-dom](https://github.com/wyze/bs-jest-dom) which are linked to from the Testing Library documentation.
 
-These projects provide a more "literal" mapping to the underlying framework. However, the dynamic nature of JavaScript can lead to awkward ergonomics when attempting to port to BuckleScript.
+These projects provide a more "literal" mapping to the underlying framework. However, the dynamic nature of JavaScript can lead to awkward ergonomics when attempting to map to BuckleScript.
 
-This project attempts to reimagine the ecosystem to feel more natural to Reason programmers. See the individual libraries in this project for the specifics.
+This project attempts to reimagine the ecosystem to feel more at home in the Reason world. See the individual libraries in this project for the specifics.
 
 ## Acknowledgments
 
- [@wyze](https://github.com/wyze) - The original bindings were a great reference for marshalling techniques between the Reason and JavaScript worlds.
+[@wyze](https://github.com/wyze) - The original bindings were a great reference for marshalling techniques between the Reason and JavaScript worlds.
