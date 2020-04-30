@@ -1,5 +1,7 @@
 # @testing-library BuckleScript bindings
 
+**:construction: This project is under active development. Expect more documentation and examples in the near future. :construction:**
+
 This project provides BuckleScript bindings for the [@testing-library](https://testing-library.com/) ecosystem.
 
 - [@drewschrauf/bs-dom-testing-library](./packages/bs-dom-testing-library) - BuckleScript bindings for [@testing-library/dom](https://github.com/testing-library/dom-testing-library).
