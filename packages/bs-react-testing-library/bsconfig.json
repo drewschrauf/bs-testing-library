@@ -23,7 +23,7 @@
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest",
-    "bs-jest-dom"
+    "@drewschrauf/bs-jest-dom"
   ],
   "refmt": 3
 }

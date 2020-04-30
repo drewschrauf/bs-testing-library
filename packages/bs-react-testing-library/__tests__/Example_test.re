@@ -1,4 +1,5 @@
 open Jest;
+open Expect;
 open ReactTestingLibrary;
 open JestDom;
 
@@ -111,10 +112,7 @@ test("change event", () => {
                         },
                       });
 
-  root
-  |> getByTestId("message")
-  |> expect
-  |> toHaveTextContent(`Str("Hello"));
+  root |> getByTestId("message") |> expect |> toHaveTextContent("Hello");
 });
 
 testPromise("asynchronous assertion", () => {

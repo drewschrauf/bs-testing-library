@@ -1959,13 +1959,6 @@ browser-resolve@^1.11.3:
   dependencies:
     resolve "1.1.7"
 
-bs-jest-dom@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/bs-jest-dom/-/bs-jest-dom-4.0.0.tgz#14a58422f21e4e1bf11bc90a39c28c91b1630dfc"
-  integrity sha512-E1ZXyq6eZgaAbgOTspTUD+658pYe6bfuGVLmGJ9XX6Z79gEvPpho2vyAq3U8NxprxVQMTMEDTfh83zn6gBIAtg==
-  dependencies:
-    "@testing-library/jest-dom" "^5.5.0"
-
 bs-let@^0.1.16:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/bs-let/-/bs-let-0.1.16.tgz#63cd449ed02c75f87eceb248d45963937afdd4ed"
