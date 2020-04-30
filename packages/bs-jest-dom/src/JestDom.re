@@ -33,11 +33,13 @@ external _toContainElement: Dom.element => unit = "toContainElement";
 external _toContainHTML: string => unit = "toContainHTML";
 [@bs.send.pipe: expect]
 external _toHaveAttribute: (string, Js.Undefined.t(string)) => unit =
-  "toContainHTML";
+  "toHaveAttribute";
 [@bs.send.pipe: expect]
 external _toHaveClass: (string, HaveClassOptions.t) => unit = "toHaveClass";
 [@bs.send.pipe: expect] external _toHaveFocus: unit => unit = "toHaveFocus";
-[@bs.send.pipe: expect] external _toBeChecked: unit => unit = "toBeChecked";
+[@bs.send.pipe: expect]
+external _toHaveFormValues: Js.t({..}) => unit = "toHaveFormValues";
+[@bs.send.pipe: expect] external _toHaveStyle: string => unit = "toHaveStyle";
 [@bs.send.pipe: expect]
 external _toHaveTextContent:
   (
@@ -45,7 +47,11 @@ external _toHaveTextContent:
     HaveTextContentOptions.t
   ) =>
   unit =
-  "toBeInTheDocument";
+  "toHaveTextContent";
+[@bs.send.pipe: expect] external _toHaveValue: string => unit = "toHaveValue";
+[@bs.send.pipe: expect]
+external _toHaveDisplayValue: string => unit = "toHaveDisplayValue";
+[@bs.send.pipe: expect] external _toBeChecked: unit => unit = "toBeChecked";
 
 type partial('a) = [ | `Just('a) | `Not('a)];
 
@@ -69,7 +75,8 @@ type assertion =
   | ToHaveAttribute(partial((Dom.element, string, option(string))))
   | ToHaveClass(partial((Dom.element, string, HaveClassOptions.t)))
   | ToHaveFocus(partial(Dom.element))
-  | ToBeChecked(partial(Dom.element))
+  | ToHaveFormValues(partial((Dom.element, Js.t({..})))): assertion
+  | ToHaveStyle(partial((Dom.element, string)))
   | ToHaveTextContent(
       partial(
         (
@@ -78,7 +85,10 @@ type assertion =
           HaveTextContentOptions.t,
         ),
       ),
-    );
+    )
+  | ToHaveValue(partial((Dom.element, string)))
+  | ToHaveDisplayValue(partial((Dom.element, string)))
+  | ToBeChecked(partial(Dom.element));
 
 let affirm = e => {
   switch (e) {
@@ -111,12 +121,23 @@ let affirm = e => {
   | ToHaveClass(`Not(e, c, o)) => e |> _expect |> _not |> _toHaveClass(c, o)
   | ToHaveFocus(`Just(e)) => e |> _expect |> _toHaveFocus()
   | ToHaveFocus(`Not(e)) => e |> _expect |> _not |> _toHaveFocus()
-  | ToBeChecked(`Just(e)) => e |> _expect |> _toBeChecked()
-  | ToBeChecked(`Not(e)) => e |> _expect |> _not |> _toBeChecked()
+  | ToHaveFormValues(`Just(e, v)) => e |> _expect |> _toHaveFormValues(v)
+  | ToHaveFormValues(`Not(e, v)) =>
+    e |> _expect |> _not |> _toHaveFormValues(v)
+  | ToHaveStyle(`Just(e, s)) => e |> _expect |> _toHaveStyle(s)
+  | ToHaveStyle(`Not(e, s)) => e |> _expect |> _not |> _toHaveStyle(s)
   | ToHaveTextContent(`Just(e, s, o)) =>
     e |> _expect |> _toHaveTextContent(s, o)
   | ToHaveTextContent(`Not(e, s, o)) =>
     e |> _expect |> _not |> _toHaveTextContent(s, o)
+  | ToHaveValue(`Just(e, v)) => e |> _expect |> _toHaveValue(v)
+  | ToHaveValue(`Not(e, v)) => e |> _expect |> _not |> _toHaveValue(v)
+  | ToHaveDisplayValue(`Just(e, v)) =>
+    e |> _expect |> _toHaveDisplayValue(v)
+  | ToHaveDisplayValue(`Not(e, v)) =>
+    e |> _expect |> _not |> _toHaveDisplayValue(v)
+  | ToBeChecked(`Just(e)) => e |> _expect |> _toBeChecked()
+  | ToBeChecked(`Not(e)) => e |> _expect |> _not |> _toBeChecked()
   };
   Jest.pass;
 };
@@ -184,8 +205,13 @@ let toHaveFocus = (p: [< partial(Dom.element)]): Jest.assertion => {
   ToHaveFocus(mapMod(exp => exp, p))->affirm;
 };
 
-let toBeChecked = (p: [< partial(Dom.element)]): Jest.assertion => {
-  ToBeChecked(mapMod(exp => exp, p))->affirm;
+let toHaveFormValues =
+    (v: Js.t({..}), p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveFormValues(mapMod(exp => (exp, v), p))->affirm;
+};
+
+let toHaveStyle = (s: string, p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveStyle(mapMod(exp => (exp, s), p))->affirm;
 };
 
 let toHaveTextContent =
@@ -220,4 +246,17 @@ let toHaveTextContentRe =
     ),
   )
   ->affirm;
+};
+
+let toHaveValue = (v: string, p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveValue(mapMod(exp => (exp, v), p))->affirm;
+};
+
+let toHaveDisplayValue =
+    (v: string, p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveDisplayValue(mapMod(exp => (exp, v), p))->affirm;
+};
+
+let toBeChecked = (p: [< partial(Dom.element)]): Jest.assertion => {
+  ToBeChecked(mapMod(exp => exp, p))->affirm;
 };
