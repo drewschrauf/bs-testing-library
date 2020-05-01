@@ -13,9 +13,7 @@ module WithTestId = {
     ReasonReact.cloneElement(children, ~props={"data-testid": testid}, [||]);
 };
 
-/*
- * Note that WithTestId has been wrapped **around** the heading.
- */
+/* note that WithTestId has been wrapped **around** the heading */
 module TestIdExample = {
   [@react.component]
   let make = () =>
@@ -28,5 +26,5 @@ module TestIdExample = {
 
 test("getByTestId", () => {
   let root = render(<TestIdExample />);
-  root |> getByTestId("my-test-id") |> expect |> toBeInTheDocument;
+  root |> getByTestId("my-test-id") |> expect |> toHaveTextContent("Heading");
 });

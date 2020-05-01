@@ -41,7 +41,7 @@ module SlowCounter = {
 
     let increment = _ => {
       dispatch(StartIncrement);
-      setTimeout(() => dispatch(EndIncrement), 200)->ignore;
+      setTimeout(() => dispatch(EndIncrement), 100)->ignore;
     };
 
     <div>
@@ -95,5 +95,25 @@ testPromise("async chaining with bs-let", () => {
   button |> FireEvent.click;
   let%Async.Wrap count = root |> findByText("Count 2");
 
+  expect(count) |> toBeInTheDocument;
+});
+
+testPromise("waitFor", () => {
+  let root = render(<SlowCounter />);
+
+  root |> getByText("Increment") |> FireEvent.click;
+
+  waitFor(() => root |> getByText("Count 1"))
+  |> Js.Promise.then_(count =>
+       expect(count) |> toBeInTheDocument |> Js.Promise.resolve
+     );
+});
+
+testPromise("waitFor with bs-let", () => {
+  let root = render(<SlowCounter />);
+
+  root |> getByText("Increment") |> FireEvent.click;
+
+  let%Async.Wrap count = waitFor(() => root |> getByText("Count 1"));
   expect(count) |> toBeInTheDocument;
 });
