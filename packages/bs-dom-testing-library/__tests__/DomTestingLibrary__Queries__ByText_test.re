@@ -35,8 +35,7 @@ module type TestCase = {
       ~selector: string=?,
       ~exact: bool=?,
       ~normalizer: string => string=?,
-      ~ignore: bool=?,
-      ~ignoreTags: string=?,
+      ~ignore: [ | `disable | `selector(string)]=?,
       string,
       Dom.element
     ) =>
@@ -46,8 +45,7 @@ module type TestCase = {
       ~selector: string=?,
       ~exact: bool=?,
       ~normalizer: string => string=?,
-      ~ignore: bool=?,
-      ~ignoreTags: string=?,
+      ~ignore: [ | `disable | `selector(string)]=?,
       Js.Re.t,
       Dom.element
     ) =>
@@ -57,8 +55,7 @@ module type TestCase = {
       ~selector: string=?,
       ~exact: bool=?,
       ~normalizer: string => string=?,
-      ~ignore: bool=?,
-      ~ignoreTags: string=?,
+      ~ignore: [ | `disable | `selector(string)]=?,
       (string, Dom.element) => bool,
       Dom.element
     ) =>
@@ -97,7 +94,7 @@ module Make = (TC: TestCase) => {
           ~selector="div",
           ~exact=true,
           ~normalizer=a => a,
-          ~ignoreTags="div",
+          ~ignore=`selector("script"),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -106,7 +103,7 @@ module Make = (TC: TestCase) => {
           exact: true,
           selector: "div",
           normalizer: expect.any(Function),
-          ignore: "div"
+          ignore: "script"
         })
       |}
       ]
@@ -145,7 +142,7 @@ module Make = (TC: TestCase) => {
           ~selector="div",
           ~exact=true,
           ~normalizer=a => a,
-          ~ignoreTags="div",
+          ~ignore=`selector("script"),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -154,7 +151,7 @@ module Make = (TC: TestCase) => {
           exact: true,
           selector: "div",
           normalizer: expect.any(Function),
-          ignore: "div"
+          ignore: "script"
         })
       |}
       ]
@@ -193,7 +190,7 @@ module Make = (TC: TestCase) => {
           ~selector="div",
           ~exact=true,
           ~normalizer=a => a,
-          ~ignoreTags="div",
+          ~ignore=`selector("script"),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -202,7 +199,7 @@ module Make = (TC: TestCase) => {
           exact: true,
           selector: "div",
           normalizer: expect.any(Function),
-          ignore: "div"
+          ignore: "script"
         })
       |}
       ]

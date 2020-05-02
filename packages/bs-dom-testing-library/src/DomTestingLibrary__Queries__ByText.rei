@@ -3,8 +3,7 @@ let getByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -14,8 +13,7 @@ let getByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -25,8 +23,7 @@ let getByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>
@@ -37,8 +34,7 @@ let getAllByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -48,8 +44,7 @@ let getAllByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -59,8 +54,7 @@ let getAllByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>
@@ -71,8 +65,7 @@ let queryByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -82,8 +75,7 @@ let queryByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -93,8 +85,7 @@ let queryByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>
@@ -105,8 +96,7 @@ let queryAllByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -116,8 +106,7 @@ let queryAllByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -127,8 +116,7 @@ let queryAllByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>
@@ -139,8 +127,7 @@ let findByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -150,8 +137,7 @@ let findByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -161,8 +147,7 @@ let findByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>
@@ -173,8 +158,7 @@ let findAllByText:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     string,
     Dom.element
   ) =>
@@ -184,8 +168,7 @@ let findAllByTextRe:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     Js.Re.t,
     Dom.element
   ) =>
@@ -195,8 +178,7 @@ let findAllByTextFn:
     ~selector: string=?,
     ~exact: bool=?,
     ~normalizer: string => string=?,
-    ~ignore: bool=?,
-    ~ignoreTags: string=?,
+    ~ignore: [ | `disable | `selector(string)]=?,
     (string, Dom.element) => bool,
     Dom.element
   ) =>

@@ -14,17 +14,15 @@ module ByTextOptions = {
     normalizer: option(string => string),
   };
 
-  let make = (~selector, ~exact, ~normalizer, ~ignore, ~ignoreTags) => {
+  let make = (~selector, ~exact, ~normalizer, ~ignore) => {
     selector,
     exact,
     normalizer,
     ignore:
-      switch (ignore, ignoreTags) {
-      | (None, None) => None
-      | (Some(b), None) => Some(StringOrBool.makeBool(b))
-      | (None, Some(s)) => Some(StringOrBool.makeString(s))
-      | (Some(_), Some(_)) =>
-        failwith("You can't specify ignore and ignoreTags on the same query")
+      switch (ignore) {
+      | Some(`disable) => Some(StringOrBool.makeBool(false))
+      | Some(`selector(s)) => Some(StringOrBool.makeString(s))
+      | None => None
       },
   };
 };
@@ -132,8 +130,7 @@ module Make = (T: ByText) => {
         ~selector: option(string)=?,
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
-        ~ignore: option(bool)=?,
-        ~ignoreTags: option(string)=?,
+        ~ignore: option([ | `disable | `selector(string)])=?,
         text: string,
         el: Dom.element,
       )
@@ -141,13 +138,7 @@ module Make = (T: ByText) => {
     T.fn(
       el,
       `Str(text),
-      ByTextOptions.make(
-        ~selector,
-        ~exact,
-        ~normalizer,
-        ~ignore,
-        ~ignoreTags,
-      ),
+      ByTextOptions.make(~selector, ~exact, ~normalizer, ~ignore),
     )
     ->T.mapReturnType;
 
@@ -156,8 +147,7 @@ module Make = (T: ByText) => {
         ~selector: option(string)=?,
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
-        ~ignore: option(bool)=?,
-        ~ignoreTags: option(string)=?,
+        ~ignore: option([ | `disable | `selector(string)])=?,
         re: Js.Re.t,
         el: Dom.element,
       )
@@ -165,13 +155,7 @@ module Make = (T: ByText) => {
     T.fn(
       el,
       `Re(re),
-      ByTextOptions.make(
-        ~selector,
-        ~exact,
-        ~normalizer,
-        ~ignore,
-        ~ignoreTags,
-      ),
+      ByTextOptions.make(~selector, ~exact, ~normalizer, ~ignore),
     )
     ->T.mapReturnType;
 
@@ -180,8 +164,7 @@ module Make = (T: ByText) => {
         ~selector: option(string)=?,
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
-        ~ignore: option(bool)=?,
-        ~ignoreTags: option(string)=?,
+        ~ignore: option([ | `disable | `selector(string)])=?,
         fn: (string, Dom.element) => bool,
         el: Dom.element,
       )
@@ -189,13 +172,7 @@ module Make = (T: ByText) => {
     T.fn(
       el,
       `Fn(fn),
-      ByTextOptions.make(
-        ~selector,
-        ~exact,
-        ~normalizer,
-        ~ignore,
-        ~ignoreTags,
-      ),
+      ByTextOptions.make(~selector, ~exact, ~normalizer, ~ignore),
     )
     ->T.mapReturnType;
 };

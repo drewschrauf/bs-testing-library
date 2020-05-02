@@ -15,20 +15,16 @@ module ByRoleOptions = {
     normalizer: option(string => string),
   };
 
-  let make = (~exact, ~hidden, ~normalizer, ~name, ~nameRe, ~nameFn) => {
+  let make = (~exact, ~hidden, ~normalizer, ~name) => {
     exact,
     hidden,
     normalizer,
     name:
-      switch (name, nameRe, nameFn) {
-      | (None, None, None) => None
-      | (Some(s), None, None) => Some(TextMatch.makeString(s))
-      | (None, Some(r), None) => Some(TextMatch.makeRe(r))
-      | (None, None, Some(f)) => Some(TextMatch.makeFn(f))
-      | (_, _, _) =>
-        failwith(
-          "You can't specify more than one name format on a single query",
-        )
+      switch (name) {
+      | Some(`str(s)) => Some(TextMatch.makeString(s))
+      | Some(`re(r)) => Some(TextMatch.makeRe(r))
+      | Some(`fn(f)) => Some(TextMatch.makeFn(f))
+      | None => None
       },
   };
 };
@@ -136,9 +132,14 @@ module Make = (T: ByRole) => {
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
         ~hidden: option(bool)=?,
-        ~name: option(string)=?,
-        ~nameRe: option(Js.Re.t)=?,
-        ~nameFn: option((string, Dom.element) => bool)=?,
+        ~name:
+           option(
+             [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ],
+           )=?,
         text: string,
         el: Dom.element,
       )
@@ -146,14 +147,7 @@ module Make = (T: ByRole) => {
     T.fn(
       el,
       `Str(text),
-      ByRoleOptions.make(
-        ~exact,
-        ~normalizer,
-        ~hidden,
-        ~name,
-        ~nameRe,
-        ~nameFn,
-      ),
+      ByRoleOptions.make(~exact, ~normalizer, ~hidden, ~name),
     )
     ->T.mapReturnType;
 
@@ -162,9 +156,14 @@ module Make = (T: ByRole) => {
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
         ~hidden: option(bool)=?,
-        ~name: option(string)=?,
-        ~nameRe: option(Js.Re.t)=?,
-        ~nameFn: option((string, Dom.element) => bool)=?,
+        ~name:
+           option(
+             [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ],
+           )=?,
         re: Js.Re.t,
         el: Dom.element,
       )
@@ -172,14 +171,7 @@ module Make = (T: ByRole) => {
     T.fn(
       el,
       `Re(re),
-      ByRoleOptions.make(
-        ~exact,
-        ~normalizer,
-        ~hidden,
-        ~name,
-        ~nameRe,
-        ~nameFn,
-      ),
+      ByRoleOptions.make(~exact, ~normalizer, ~hidden, ~name),
     )
     ->T.mapReturnType;
 
@@ -188,9 +180,14 @@ module Make = (T: ByRole) => {
         ~exact: option(bool)=?,
         ~normalizer: option(string => string)=?,
         ~hidden: option(bool)=?,
-        ~name: option(string)=?,
-        ~nameRe: option(Js.Re.t)=?,
-        ~nameFn: option((string, Dom.element) => bool)=?,
+        ~name:
+           option(
+             [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ],
+           )=?,
         fn: (string, Dom.element) => bool,
         el: Dom.element,
       )
@@ -198,14 +195,7 @@ module Make = (T: ByRole) => {
     T.fn(
       el,
       `Fn(fn),
-      ByRoleOptions.make(
-        ~exact,
-        ~normalizer,
-        ~hidden,
-        ~name,
-        ~nameRe,
-        ~nameFn,
-      ),
+      ByRoleOptions.make(~exact, ~normalizer, ~hidden, ~name),
     )
     ->T.mapReturnType;
 };

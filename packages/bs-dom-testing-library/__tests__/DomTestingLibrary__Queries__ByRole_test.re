@@ -35,9 +35,12 @@ module type TestCase = {
       ~exact: bool=?,
       ~normalizer: string => string=?,
       ~hidden: bool=?,
-      ~name: string=?,
-      ~nameRe: Js.Re.t=?,
-      ~nameFn: (string, Dom.element) => bool=?,
+      ~name: [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ]
+               =?,
       string,
       Dom.element
     ) =>
@@ -47,9 +50,12 @@ module type TestCase = {
       ~exact: bool=?,
       ~normalizer: string => string=?,
       ~hidden: bool=?,
-      ~name: string=?,
-      ~nameRe: Js.Re.t=?,
-      ~nameFn: (string, Dom.element) => bool=?,
+      ~name: [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ]
+               =?,
       Js.Re.t,
       Dom.element
     ) =>
@@ -59,9 +65,12 @@ module type TestCase = {
       ~exact: bool=?,
       ~normalizer: string => string=?,
       ~hidden: bool=?,
-      ~name: string=?,
-      ~nameRe: Js.Re.t=?,
-      ~nameFn: (string, Dom.element) => bool=?,
+      ~name: [
+               | `str(string)
+               | `re(Js.Re.t)
+               | `fn((string, Dom.element) => bool)
+             ]
+               =?,
       (string, Dom.element) => bool,
       Dom.element
     ) =>
@@ -100,7 +109,7 @@ module Make = (TC: TestCase) => {
           ~exact=true,
           ~normalizer=a => a,
           ~hidden=true,
-          ~name="test",
+          ~name=`str("test"),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -148,7 +157,7 @@ module Make = (TC: TestCase) => {
           ~exact=true,
           ~normalizer=a => a,
           ~hidden=true,
-          ~name="test",
+          ~name=`re([%re "/test/"]),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -157,7 +166,7 @@ module Make = (TC: TestCase) => {
           exact: true,
           normalizer: expect.any(Function),
           hidden: true,
-          name: "test"
+          name: /test/
         })
       |}
       ]
@@ -196,7 +205,7 @@ module Make = (TC: TestCase) => {
           ~exact=true,
           ~normalizer=a => a,
           ~hidden=true,
-          ~name="test",
+          ~name=`fn((s, _) => s === "test"),
         );
       TC.setupExternalFunction();
       [%bs.raw
@@ -205,7 +214,7 @@ module Make = (TC: TestCase) => {
           exact: true,
           normalizer: expect.any(Function),
           hidden: true,
-          name: "test"
+          name: expect.any(Function)
         })
       |}
       ]
