@@ -138,10 +138,28 @@ test("toHaveClass without options", () => {
   pass;
 });
 
-test("toHaveAttribute with options", () => {
+test("toHaveClass with options", () => {
   el |> expect |> toHaveClass("class", ~exact=true) |> ignore;
   [%bs.raw
     {| expect(jd.toHaveClass).toHaveBeenCalledWith(el, "class", {exact: true})|}
+  ]
+  ->ignore;
+  pass;
+});
+
+test("toHaveClasses without options", () => {
+  el |> expect |> toHaveClasses(["class1", "class2"]) |> ignore;
+  [%bs.raw
+    {| expect(jd.toHaveClass).toHaveBeenCalledWith(el, ["class1", "class2"], {exact: undefined})|}
+  ]
+  ->ignore;
+  pass;
+});
+
+test("toHaveClasses with options", () => {
+  el |> expect |> toHaveClasses(["class1", "class2"], ~exact=true) |> ignore;
+  [%bs.raw
+    {| expect(jd.toHaveClass).toHaveBeenCalledWith(el, ["class1", "class2"], {exact: true})|}
   ]
   ->ignore;
   pass;
@@ -165,6 +183,21 @@ test("toHaveFormValues", () => {
 test("toHaveStyle", () => {
   el |> expect |> toHaveStyle("style") |> ignore;
   [%bs.raw {| expect(jd.toHaveStyle).toHaveBeenCalledWith(el, "style")|}]
+  ->ignore;
+  pass;
+});
+
+test("toHaveStyles", () => {
+  el
+  |> expect
+  |> toHaveStyles({"style1": "value1", "style2": "value2"})
+  |> ignore;
+  [%bs.raw
+    {| expect(jd.toHaveStyle).toHaveBeenCalledWith(el, {
+      style1: "value1",
+      style2: "value2"
+    })|}
+  ]
   ->ignore;
   pass;
 });
@@ -218,10 +251,45 @@ test("toHaveValue", () => {
   pass;
 });
 
+test("toHaveValueOfType string", () => {
+  el |> expect |> toHaveValueOfType(`str("value")) |> ignore;
+  [%bs.raw {| expect(jd.toHaveValue).toHaveBeenCalledWith(el, "value")|}]
+  ->ignore;
+  pass;
+});
+
+test("toHaveValueOfType string array", () => {
+  el |> expect |> toHaveValueOfType(`array([|"value"|])) |> ignore;
+  [%bs.raw {| expect(jd.toHaveValue).toHaveBeenCalledWith(el, ["value"])|}]
+  ->ignore;
+  pass;
+});
+
+test("toHaveValueOfType int", () => {
+  el |> expect |> toHaveValueOfType(`int(1)) |> ignore;
+  [%bs.raw {| expect(jd.toHaveValue).toHaveBeenCalledWith(el, 1)|}]->ignore;
+  pass;
+});
+
+test("toHaveValueOfType float", () => {
+  el |> expect |> toHaveValueOfType(`float(1.5)) |> ignore;
+  [%bs.raw {| expect(jd.toHaveValue).toHaveBeenCalledWith(el, 1.5)|}]->ignore;
+  pass;
+});
+
 test("toHaveDisplayValue", () => {
   el |> expect |> toHaveDisplayValue("value") |> ignore;
   [%bs.raw
     {| expect(jd.toHaveDisplayValue).toHaveBeenCalledWith(el, "value")|}
+  ]
+  ->ignore;
+  pass;
+});
+
+test("toHaveDisplayValues", () => {
+  el |> expect |> toHaveDisplayValues(["value1", "value2"]) |> ignore;
+  [%bs.raw
+    {| expect(jd.toHaveDisplayValue).toHaveBeenCalledWith(el, ["value1", "value2"])|}
   ]
   ->ignore;
   pass;

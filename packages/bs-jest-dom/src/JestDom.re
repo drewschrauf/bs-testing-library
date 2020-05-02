@@ -35,11 +35,20 @@ external _toContainHTML: string => unit = "toContainHTML";
 external _toHaveAttribute: (string, Js.Undefined.t(string)) => unit =
   "toHaveAttribute";
 [@bs.send.pipe: expect]
-external _toHaveClass: (string, HaveClassOptions.t) => unit = "toHaveClass";
+external _toHaveClass:
+  (
+    [@bs.unwrap] [ | `str(string) | `array(array(string))],
+    HaveClassOptions.t
+  ) =>
+  unit =
+  "toHaveClass";
 [@bs.send.pipe: expect] external _toHaveFocus: unit => unit = "toHaveFocus";
 [@bs.send.pipe: expect]
 external _toHaveFormValues: Js.t({..}) => unit = "toHaveFormValues";
-[@bs.send.pipe: expect] external _toHaveStyle: string => unit = "toHaveStyle";
+[@bs.send.pipe: expect]
+external _toHaveStyle:
+  ([@bs.unwrap] [ | `str(string) | `obj(Js.t({..}))]) => unit =
+  "toHaveStyle";
 [@bs.send.pipe: expect]
 external _toHaveTextContent:
   (
@@ -48,9 +57,18 @@ external _toHaveTextContent:
   ) =>
   unit =
   "toHaveTextContent";
-[@bs.send.pipe: expect] external _toHaveValue: string => unit = "toHaveValue";
 [@bs.send.pipe: expect]
-external _toHaveDisplayValue: string => unit = "toHaveDisplayValue";
+external _toHaveValue:
+  (
+  [@bs.unwrap]
+  [ | `str(string) | `array(array(string)) | `int(int) | `float(float)]
+  ) =>
+  unit =
+  "toHaveValue";
+[@bs.send.pipe: expect]
+external _toHaveDisplayValue:
+  ([@bs.unwrap] [ | `str(string) | `array(array(string))]) => unit =
+  "toHaveDisplayValue";
 [@bs.send.pipe: expect] external _toBeChecked: unit => unit = "toBeChecked";
 
 type partial('a) = [ | `Just('a) | `Not('a)];
@@ -74,9 +92,11 @@ type assertion =
   | ToContainHTML(partial((Dom.element, string)))
   | ToHaveAttribute(partial((Dom.element, string, option(string))))
   | ToHaveClass(partial((Dom.element, string, HaveClassOptions.t)))
+  | ToHaveClasses(partial((Dom.element, list(string), HaveClassOptions.t)))
   | ToHaveFocus(partial(Dom.element))
   | ToHaveFormValues(partial((Dom.element, Js.t({..})))): assertion
   | ToHaveStyle(partial((Dom.element, string)))
+  | ToHaveStyles(partial((Dom.element, Js.t({..})))): assertion
   | ToHaveTextContent(
       partial(
         (
@@ -87,7 +107,21 @@ type assertion =
       ),
     )
   | ToHaveValue(partial((Dom.element, string)))
+  | ToHaveValueOfType(
+      partial(
+        (
+          Dom.element,
+          [
+            | `str(string)
+            | `array(array(string))
+            | `int(int)
+            | `float(float)
+          ],
+        ),
+      ),
+    )
   | ToHaveDisplayValue(partial((Dom.element, string)))
+  | ToHaveDisplayValues(partial((Dom.element, list(string))))
   | ToBeChecked(partial(Dom.element));
 
 let affirm = e => {
@@ -117,25 +151,41 @@ let affirm = e => {
     e |> _expect |> _toHaveAttribute(a, v->Js.Undefined.fromOption)
   | ToHaveAttribute(`Not(e, a, v)) =>
     e |> _expect |> _not |> _toHaveAttribute(a, v->Js.Undefined.fromOption)
-  | ToHaveClass(`Just(e, c, o)) => e |> _expect |> _toHaveClass(c, o)
-  | ToHaveClass(`Not(e, c, o)) => e |> _expect |> _not |> _toHaveClass(c, o)
+  | ToHaveClass(`Just(e, c, o)) => e |> _expect |> _toHaveClass(`str(c), o)
+  | ToHaveClass(`Not(e, c, o)) =>
+    e |> _expect |> _not |> _toHaveClass(`str(c), o)
+  | ToHaveClasses(`Just(e, cs, o)) =>
+    e |> _expect |> _toHaveClass(`array(cs->Array.of_list), o)
+  | ToHaveClasses(`Not(e, cs, o)) =>
+    e |> _expect |> _not |> _toHaveClass(`array(cs->Array.of_list), o)
   | ToHaveFocus(`Just(e)) => e |> _expect |> _toHaveFocus()
   | ToHaveFocus(`Not(e)) => e |> _expect |> _not |> _toHaveFocus()
   | ToHaveFormValues(`Just(e, v)) => e |> _expect |> _toHaveFormValues(v)
   | ToHaveFormValues(`Not(e, v)) =>
     e |> _expect |> _not |> _toHaveFormValues(v)
-  | ToHaveStyle(`Just(e, s)) => e |> _expect |> _toHaveStyle(s)
-  | ToHaveStyle(`Not(e, s)) => e |> _expect |> _not |> _toHaveStyle(s)
+  | ToHaveStyle(`Just(e, s)) => e |> _expect |> _toHaveStyle(`str(s))
+  | ToHaveStyle(`Not(e, s)) =>
+    e |> _expect |> _not |> _toHaveStyle(`str(s))
+  | ToHaveStyles(`Just(e, s)) => e |> _expect |> _toHaveStyle(`obj(s))
+  | ToHaveStyles(`Not(e, s)) =>
+    e |> _expect |> _not |> _toHaveStyle(`obj(s))
   | ToHaveTextContent(`Just(e, s, o)) =>
     e |> _expect |> _toHaveTextContent(s, o)
   | ToHaveTextContent(`Not(e, s, o)) =>
     e |> _expect |> _not |> _toHaveTextContent(s, o)
-  | ToHaveValue(`Just(e, v)) => e |> _expect |> _toHaveValue(v)
-  | ToHaveValue(`Not(e, v)) => e |> _expect |> _not |> _toHaveValue(v)
+  | ToHaveValue(`Just(e, v)) => e |> _expect |> _toHaveValue(`str(v))
+  | ToHaveValue(`Not(e, v)) =>
+    e |> _expect |> _not |> _toHaveValue(`str(v))
+  | ToHaveValueOfType(`Just(e, v)) => e |> _expect |> _toHaveValue(v)
+  | ToHaveValueOfType(`Not(e, v)) => e |> _expect |> _not |> _toHaveValue(v)
   | ToHaveDisplayValue(`Just(e, v)) =>
-    e |> _expect |> _toHaveDisplayValue(v)
+    e |> _expect |> _toHaveDisplayValue(`str(v))
   | ToHaveDisplayValue(`Not(e, v)) =>
-    e |> _expect |> _not |> _toHaveDisplayValue(v)
+    e |> _expect |> _not |> _toHaveDisplayValue(`str(v))
+  | ToHaveDisplayValues(`Just(e, sv)) =>
+    e |> _expect |> _toHaveDisplayValue(`array(sv->Array.of_list))
+  | ToHaveDisplayValues(`Not(e, sv)) =>
+    e |> _expect |> _not |> _toHaveDisplayValue(`array(sv->Array.of_list))
   | ToBeChecked(`Just(e)) => e |> _expect |> _toBeChecked()
   | ToBeChecked(`Not(e)) => e |> _expect |> _not |> _toBeChecked()
   };
@@ -201,6 +251,13 @@ let toHaveClass =
   ->affirm;
 };
 
+let toHaveClasses =
+    (~exact: option(bool)=?, cs: list(string), p: [< partial(Dom.element)])
+    : Jest.assertion => {
+  ToHaveClasses(mapMod(exp => (exp, cs, HaveClassOptions.make(~exact)), p))
+  ->affirm;
+};
+
 let toHaveFocus = (p: [< partial(Dom.element)]): Jest.assertion => {
   ToHaveFocus(mapMod(exp => exp, p))->affirm;
 };
@@ -212,6 +269,11 @@ let toHaveFormValues =
 
 let toHaveStyle = (s: string, p: [< partial(Dom.element)]): Jest.assertion => {
   ToHaveStyle(mapMod(exp => (exp, s), p))->affirm;
+};
+
+let toHaveStyles =
+    (s: Js.t({..}), p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveStyles(mapMod(exp => (exp, s), p))->affirm;
 };
 
 let toHaveTextContent =
@@ -252,9 +314,28 @@ let toHaveValue = (v: string, p: [< partial(Dom.element)]): Jest.assertion => {
   ToHaveValue(mapMod(exp => (exp, v), p))->affirm;
 };
 
+let toHaveValueOfType =
+    (
+      v: [
+        | `str(string)
+        | `array(array(string))
+        | `int(int)
+        | `float(float)
+      ],
+      p: [< partial(Dom.element)],
+    )
+    : Jest.assertion => {
+  ToHaveValueOfType(mapMod(exp => (exp, v), p))->affirm;
+};
+
 let toHaveDisplayValue =
     (v: string, p: [< partial(Dom.element)]): Jest.assertion => {
   ToHaveDisplayValue(mapMod(exp => (exp, v), p))->affirm;
+};
+
+let toHaveDisplayValues =
+    (vs: list(string), p: [< partial(Dom.element)]): Jest.assertion => {
+  ToHaveDisplayValues(mapMod(exp => (exp, vs), p))->affirm;
 };
 
 let toBeChecked = (p: [< partial(Dom.element)]): Jest.assertion => {

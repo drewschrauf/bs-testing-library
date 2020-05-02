@@ -27,12 +27,17 @@ let toHaveAttribute:
 let toHaveClass:
   (~exact: bool=?, string, [< partial(Dom.element)]) => Jest.assertion;
 
+let toHaveClasses:
+  (~exact: bool=?, list(string), [< partial(Dom.element)]) => Jest.assertion;
+
 let toHaveFocus: [< partial(Dom.element)] => Jest.assertion;
 
 let toHaveFormValues:
   (Js.t({..}), [< partial(Dom.element)]) => Jest.assertion;
 
 let toHaveStyle: (string, [< partial(Dom.element)]) => Jest.assertion;
+
+let toHaveStyles: (Js.t({..}), [< partial(Dom.element)]) => Jest.assertion;
 
 let toHaveTextContent:
   (~normalizeWhitespace: bool=?, string, [< partial(Dom.element)]) =>
@@ -44,6 +49,16 @@ let toHaveTextContentRe:
 
 let toHaveValue: (string, [< partial(Dom.element)]) => Jest.assertion;
 
+let toHaveValueOfType:
+  (
+    [ | `str(string) | `array(array(string)) | `int(int) | `float(float)],
+    [< partial(Dom.element)]
+  ) =>
+  Jest.assertion;
+
 let toHaveDisplayValue: (string, [< partial(Dom.element)]) => Jest.assertion;
+
+let toHaveDisplayValues:
+  (list(string), [< partial(Dom.element)]) => Jest.assertion;
 
 let toBeChecked: [< partial(Dom.element)] => Jest.assertion;
