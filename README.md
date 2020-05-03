@@ -1,4 +1,4 @@
-# @testing-library BuckleScript bindings
+# @testing-library Reason/BuckleScript bindings
 
 **:construction: This project is under active development. Expect more documentation and examples in the near future. :construction:**
 
