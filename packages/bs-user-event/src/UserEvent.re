@@ -16,26 +16,26 @@ module TabOptions = {
   let make = (~shift, ~focusTrap) => {shift, focusTrap};
 };
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _click: Dom.element => unit = "click";
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _dblClick: Dom.element => unit = "dblClick";
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _type: (Dom.element, string, TypeOptions.t) => Js.Promise.t(unit) =
   "type";
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _clear: Dom.element => unit = "clear";
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _selectOptions:
   (Dom.element, [@bs.unwrap] [ | `str(string) | `array(array(string))]) =>
   unit =
   "selectOptions";
 
-[@bs.module "@testing-library/user-event"]
+[@bs.module "@testing-library/user-event"] [@bs.scope "default"]
 external _tab: TabOptions.t => unit = "tab";
 
 let click = (e: Dom.element): unit => _click(e);

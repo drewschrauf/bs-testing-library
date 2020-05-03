@@ -5,12 +5,14 @@ let ue = [%bs.raw {| require("@testing-library/user-event") |}];
 [%bs.raw
   {|
     jest.mock("@testing-library/user-event", () => ({
-      click: jest.fn(),
-      dblClick: jest.fn(),
-      type: jest.fn().mockReturnValue(Promise.resolve()),
-      clear: jest.fn(),
-      selectOptions: jest.fn(),
-      tab: jest.fn()
+      default: {
+        click: jest.fn(),
+        dblClick: jest.fn(),
+        type: jest.fn().mockReturnValue(Promise.resolve()),
+        clear: jest.fn(),
+        selectOptions: jest.fn(),
+        tab: jest.fn()
+      }
     }))
   |}
 ];
@@ -26,13 +28,13 @@ beforeEach(() => {
 
 test("click", () => {
   let result = UserEvent.click(el);
-  [%bs.raw {| expect(ue.click).toHaveBeenCalledWith(el) |}]->ignore;
+  [%bs.raw {| expect(ue.default.click).toHaveBeenCalledWith(el) |}]->ignore;
   expect(result) |> toBe();
 });
 
 test("dblClick", () => {
   let result = UserEvent.dblClick(el);
-  [%bs.raw {| expect(ue.dblClick).toHaveBeenCalledWith(el) |}]->ignore;
+  [%bs.raw {| expect(ue.default.dblClick).toHaveBeenCalledWith(el) |}]->ignore;
   expect(result) |> toBe();
 });
 
@@ -40,7 +42,7 @@ testPromise("type without options", () => {
   let result = UserEvent.type_("text", el);
   [%bs.raw
     {|
-    expect(ue.type).toHaveBeenCalledWith(el, "text", {
+    expect(ue.default.type).toHaveBeenCalledWith(el, "text", {
       allAtOnce: undefined,
       delay: undefined
     })
@@ -54,7 +56,7 @@ testPromise("type with options", () => {
   let result = UserEvent.type_("text", el, ~allAtOnce=true, ~delay=1000);
   [%bs.raw
     {|
-    expect(ue.type).toHaveBeenCalledWith(el, "text", {
+    expect(ue.default.type).toHaveBeenCalledWith(el, "text", {
       allAtOnce: true,
       delay: 1000
     })
@@ -66,13 +68,15 @@ testPromise("type with options", () => {
 
 test("clear", () => {
   let result = UserEvent.clear(el);
-  [%bs.raw {| expect(ue.clear).toHaveBeenCalledWith(el) |}]->ignore;
+  [%bs.raw {| expect(ue.default.clear).toHaveBeenCalledWith(el) |}]->ignore;
   expect(result) |> toBe();
 });
 
 test("selectOption", () => {
   let result = UserEvent.selectOption("value", el);
-  [%bs.raw {| expect(ue.selectOptions).toHaveBeenCalledWith(el, "value") |}]
+  [%bs.raw
+    {| expect(ue.default.selectOptions).toHaveBeenCalledWith(el, "value") |}
+  ]
   ->ignore;
   expect(result) |> toBe();
 });
@@ -80,7 +84,7 @@ test("selectOption", () => {
 test("selectOptions", () => {
   let result = UserEvent.selectOptions(["value1", "value2"], el);
   [%bs.raw
-    {| expect(ue.selectOptions).toHaveBeenCalledWith(el, ["value1", "value2"]) |}
+    {| expect(ue.default.selectOptions).toHaveBeenCalledWith(el, ["value1", "value2"]) |}
   ]
   ->ignore;
   expect(result) |> toBe();
@@ -89,7 +93,7 @@ test("selectOptions", () => {
 test("tab without options", () => {
   let result = UserEvent.tab();
   [%bs.raw
-    {| expect(ue.tab).toHaveBeenCalledWith({ shift: undefined, focusTrap: undefined }) |}
+    {| expect(ue.default.tab).toHaveBeenCalledWith({ shift: undefined, focusTrap: undefined }) |}
   ]
   ->ignore;
   expect(result) |> toBe();
@@ -98,7 +102,7 @@ test("tab without options", () => {
 test("tab with options", () => {
   let result = UserEvent.tab(~shift=true, ~focusTrap=el, ());
   [%bs.raw
-    {| expect(ue.tab).toHaveBeenCalledWith({ shift: true, focusTrap: el }) |}
+    {| expect(ue.default.tab).toHaveBeenCalledWith({ shift: true, focusTrap: el }) |}
   ]
   ->ignore;
   expect(result) |> toBe();
