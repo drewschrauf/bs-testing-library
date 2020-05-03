@@ -25,5 +25,6 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.5.1",
     "bs-platform": "^7.2.2"
-  }
+  },
+  "gitHead": "765320fa54c5634f30fa7e33574009412f84c747"
 }
