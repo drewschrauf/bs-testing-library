@@ -44,4 +44,4 @@ If the assertion can take an argument, pass positional and named optional argume
 expect(el) |> toHaveClass("my-class", ~exact=false)
 ```
 
-Assertions that can take multiple argument types have been split into multiple assertions. For example, `toHaveClass` and `toHaveClasses` to take a `string` and `list(string)` respectively. Refer to the [interface file](https://github.com/drewschrauf/bs-testing-library/blob/master/packages/bs-jest-dom/src/JestDom.rei) for a full list of asstions.
+Assertions that can take multiple argument types have been split into multiple assertions. For example, `toHaveClass` and `toHaveClasses` take a `string` and `list(string)` respectively. Refer to the [interface file](https://github.com/drewschrauf/bs-testing-library/blob/master/packages/bs-jest-dom/src/JestDom.rei) for a full list of asstions.
