@@ -1,0 +1,24 @@
+{
+  "name": "@drewschrauf/bs-user-event",
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": [{
+    "dir": "src",
+    "subdirs": true
+  }, {
+    "dir": "__tests__",
+    "type": "dev"
+  }],
+  "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
+  "package-specs": [{
+    "module": "commonjs",
+    "in-source": false
+  }],
+  "suffix": ".bs.js",
+  "bs-dependencies": [
+    "@glennsl/bs-jest"
+  ],
+  "bs-dev-dependencies": [],
+  "refmt": 3
+}
