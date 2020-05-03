@@ -124,9 +124,20 @@ test("form values", () => {
 });
 
 /* the name input is required so if there's no name, it's invalid */
-test("invalid", () => {
+test("invalid form", () =>
+  render(<ExampleForm />) |> getByRole("form") |> expect |> toBeInvalid
+);
+
+test("valid form", () => {
   let root = render(<ExampleForm />);
 
-  root |> getByLabelText("Name") |> expect |> toBeInvalid |> ignore;
-  root |> getByRole("form") |> expect |> toBeInvalid;
+  root
+  |> getByLabelText("Name")
+  |> FireEvent.change(~eventInit={
+                        "target": {
+                          "value": "Drew",
+                        },
+                      });
+
+  root |> getByRole("form") |> expect |> toBeValid;
 });

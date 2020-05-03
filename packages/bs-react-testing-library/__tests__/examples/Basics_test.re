@@ -39,36 +39,34 @@ module Message = {
   };
 };
 
-test("render", () => {
-  let root = render(<Counter />);
-  expect(root) |> toBeInTheDocument;
-});
+test("render", () =>
+  render(<Counter />) |> expect |> toBeInTheDocument
+);
 
-test("query with string matcher", () => {
-  let root = render(<Counter />);
-  root |> getByText("Count 0") |> expect |> toBeInTheDocument;
-});
+test("query with string matcher", () =>
+  render(<Counter />) |> getByText("Count 0") |> expect |> toBeInTheDocument
+);
 
-test("query with regex matcher", () => {
-  let root = render(<Counter />);
-  root |> getByTextRe([%re "/^Count \\d+$/"]) |> expect |> toBeInTheDocument;
-});
+test("query with regex matcher", () =>
+  render(<Counter />)
+  |> getByTextRe([%re "/^Count \\d+$/"])
+  |> expect
+  |> toBeInTheDocument
+);
 
-test("query with function matcher", () => {
-  let root = render(<Counter />);
-  root
+test("query with function matcher", () =>
+  render(<Counter />)
   |> getByTextFn((content, _) => content == "Count 0")
   |> expect
-  |> toBeInTheDocument;
-});
+  |> toBeInTheDocument
+);
 
-test("query with options", () => {
-  let root = render(<Counter />);
-  root
+test("query with options", () =>
+  render(<Counter />)
   |> getByText("Count", ~exact=false, ~selector="h1")
   |> expect
-  |> toBeInTheDocument;
-});
+  |> toBeInTheDocument
+);
 
 test("firing events", () => {
   let root = render(<Counter />);
