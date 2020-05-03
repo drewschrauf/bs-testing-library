@@ -8,6 +8,17 @@
     "pretest": "yarn build",
     "test": "jest"
   },
+  "files": [
+    "README.md",
+    "src",
+    "bsconfig.json"
+  ],
+  "keywords": [
+    "reason",
+    "bucklescript",
+    "jest",
+    "react"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.5.0"
   },

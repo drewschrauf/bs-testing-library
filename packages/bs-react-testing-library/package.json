@@ -9,6 +9,17 @@
     "pretest": "yarn build",
     "test": "jest"
   },
+  "files": [
+    "README.md",
+    "src",
+    "bsconfig.json"
+  ],
+  "keywords": [
+    "reason",
+    "bucklescript",
+    "jest",
+    "react"
+  ],
   "dependencies": {
     "@drewschrauf/bs-dom-testing-library": "0.0.0",
     "@testing-library/react": "^10.0.3"
