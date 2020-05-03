@@ -1,0 +1,32 @@
+{
+  "name": "@drewschrauf/bs-user-events",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "bsb -clean-world -make-world",
+    "watch": "bsb -make-world -w",
+    "pretest": "yarn build",
+    "test": "jest"
+  },
+  "files": [
+    "README.md",
+    "src",
+    "bsconfig.json"
+  ],
+  "keywords": [
+    "reason",
+    "bucklescript",
+    "jest",
+    "react"
+  ],
+  "dependencies": {
+    "@testing-library/user-event": "^10.1.0"
+  },
+  "devDependencies": {
+    "@glennsl/bs-jest": "^0.5.1",
+    "bs-platform": "^7.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
