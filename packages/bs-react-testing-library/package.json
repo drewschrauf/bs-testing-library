@@ -1,6 +1,6 @@
 {
   "name": "@drewschrauf/bs-react-testing-library",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -21,11 +21,11 @@
     "react"
   ],
   "dependencies": {
-    "@drewschrauf/bs-dom-testing-library": "^0.1.0",
+    "@drewschrauf/bs-dom-testing-library": "^0.1.1",
     "@testing-library/react": "^10.0.3"
   },
   "devDependencies": {
-    "@drewschrauf/bs-jest-dom": "^0.1.0",
+    "@drewschrauf/bs-jest-dom": "^0.1.1",
     "@glennsl/bs-jest": "^0.5.1",
     "bs-let": "^0.1.16",
     "bs-platform": "^7.2.2",
