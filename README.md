@@ -7,6 +7,7 @@ This project provides BuckleScript bindings for the [@testing-library](https://t
 - [@drewschrauf/bs-dom-testing-library](./packages/bs-dom-testing-library) - BuckleScript bindings for [@testing-library/dom](https://github.com/testing-library/dom-testing-library).
 - [@drewschrauf/bs-react-testing-library](./packages/bs-react-testing-library) - BuckleScript bindings for [@testing-library/react](https://github.com/testing-library/react-testing-library).
 - [@drewschrauf/bs-jest-dom](./packages/bs-jest-dom) - BuckleScript bindings for [@testing-library/jest-dom](https://github.com/testing-library/jest-dom).
+- [@drewschrauf/bs-react-hooks-testing-library](./packages/bs-react-hooks-testing-library) - BuckleScript bindings for [@testing-library/react-hooks](https://github.com/testing-library/react-hooks-testing-library).
 - [@drewschrauf/bs-user-event](./packages/bs-user-event) - BuckleScript bindings for [@testing-library/user-event](https://github.com/testing-library/user-event).
 
 ## Motivation

@@ -1,0 +1,25 @@
+{
+  "name": "@drewschrauf/bs-react-hooks-testing-library",
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": [{
+    "dir": "src",
+    "subdirs": true
+  }, {
+    "dir": "__tests__",
+    "type": "dev"
+  }],
+  "bsc-flags": ["-bs-super-errors", "-bs-no-version-header", "-w -48"],
+  "package-specs": [{
+    "module": "commonjs",
+    "in-source": false
+  }],
+  "suffix": ".bs.js",
+  "bs-dependencies": [
+    "@glennsl/bs-jest",
+    "reason-react"
+  ],
+  "bs-dev-dependencies": [],
+  "refmt": 3
+}
