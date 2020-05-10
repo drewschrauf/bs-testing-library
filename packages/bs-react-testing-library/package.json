@@ -22,8 +22,7 @@
   ],
   "dependencies": {
     "@drewschrauf/bs-dom-testing-library": "^0.1.2",
-    "@testing-library/react": "^10.0.3",
-    "bs-let": "^0.1.16"
+    "@testing-library/react": "^10.0.3"
   },
   "devDependencies": {
     "@drewschrauf/bs-jest-dom": "^0.1.3",
