@@ -54,9 +54,9 @@ module SlowCounter = {
 };
 
 testPromise("async assertion", () => {
-  let root = render(<SlowCounter />);
-  root |> getByText("Increment") |> FireEvent.click;
-  root
+  render(<SlowCounter />) |> ignore;
+  screen |> getByText("Increment") |> UserEvent.click;
+  screen
   |> findByText("Count 1")
   |> Js.Promise.then_(count =>
        expect(count) |> toBeInTheDocument |> Js.Promise.resolve
@@ -64,21 +64,21 @@ testPromise("async assertion", () => {
 });
 
 testPromise("async assertion with bs-let", () => {
-  let root = render(<SlowCounter />);
-  root |> getByText("Increment") |> FireEvent.click;
-  let%Async.Wrap count = root |> findByText("Count 1");
+  render(<SlowCounter />) |> ignore;
+  screen |> getByText("Increment") |> UserEvent.click;
+  let%Async.Wrap count = screen |> findByText("Count 1");
   expect(count) |> toBeInTheDocument;
 });
 
 testPromise("async chaining", () => {
-  let root = render(<SlowCounter />);
-  let button = root |> getByText("Increment");
-  button |> FireEvent.click;
-  root
+  render(<SlowCounter />) |> ignore;
+  let button = screen |> getByText("Increment");
+  button |> UserEvent.click;
+  screen
   |> findByText("Count 1")
   |> Js.Promise.then_(_ => {
-       button |> FireEvent.click;
-       root |> findByText("Count 2");
+       button |> UserEvent.click;
+       screen |> findByText("Count 2");
      })
   |> Js.Promise.then_(count =>
        expect(count) |> toBeInTheDocument |> Js.Promise.resolve
@@ -86,34 +86,34 @@ testPromise("async chaining", () => {
 });
 
 testPromise("async chaining with bs-let", () => {
-  let root = render(<SlowCounter />);
-  let button = root |> getByText("Increment");
+  render(<SlowCounter />) |> ignore;
+  let button = screen |> getByText("Increment");
 
-  button |> FireEvent.click;
-  let%Async _ = root |> findByText("Count 1");
+  button |> UserEvent.click;
+  let%Async _ = screen |> findByText("Count 1");
 
-  button |> FireEvent.click;
-  let%Async.Wrap count = root |> findByText("Count 2");
+  button |> UserEvent.click;
+  let%Async.Wrap count = screen |> findByText("Count 2");
 
   expect(count) |> toBeInTheDocument;
 });
 
 testPromise("waitFor", () => {
-  let root = render(<SlowCounter />);
+  render(<SlowCounter />) |> ignore;
 
-  root |> getByText("Increment") |> FireEvent.click;
+  screen |> getByText("Increment") |> UserEvent.click;
 
-  waitFor(() => root |> getByText("Count 1"))
+  waitFor(() => screen |> getByText("Count 1"))
   |> Js.Promise.then_(count =>
        expect(count) |> toBeInTheDocument |> Js.Promise.resolve
      );
 });
 
 testPromise("waitFor with bs-let", () => {
-  let root = render(<SlowCounter />);
+  render(<SlowCounter />) |> ignore;
 
-  root |> getByText("Increment") |> FireEvent.click;
+  screen |> getByText("Increment") |> UserEvent.click;
 
-  let%Async.Wrap count = waitFor(() => root |> getByText("Count 1"));
+  let%Async.Wrap count = waitFor(() => screen |> getByText("Count 1"));
   expect(count) |> toBeInTheDocument;
 });

@@ -25,6 +25,9 @@ module TestIdExample = {
 };
 
 test("getByTestId", () => {
-  let root = render(<TestIdExample />);
-  root |> getByTestId("my-test-id") |> expect |> toHaveTextContent("Heading");
+  render(<TestIdExample />) |> ignore;
+  screen
+  |> getByTestId("my-test-id")
+  |> expect
+  |> toHaveTextContent("Heading");
 });

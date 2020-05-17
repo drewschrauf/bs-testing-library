@@ -2,7 +2,7 @@
 
 [@testing-library/jest-dom](https://github.com/testing-library/jest-dom) Reason/BuckleScript bindings.
 
-Take a look at some usage [examples](https://github.com/drewschrauf/bs-testing-library/tree/master/packages/bs-react-testing-library/__tests__/examples).
+Take a look at some usage [examples](https://github.com/drewschrauf/bs-testing-library/tree/master/packages/examples/__tests__).
 
 ## Installation
 

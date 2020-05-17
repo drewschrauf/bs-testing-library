@@ -1,15 +1,11 @@
 {
-  "name": "@drewschrauf/bs-react-testing-library",
+  "name": "@drewschrauf/bs-testing-library-examples",
   "reason": {
     "react-jsx": 3
   },
   "sources": [{
-    "dir": "src",
-    "subdirs": true
-  }, {
     "dir": "__tests__",
-    "type": "dev",
-    "subdirs": true
+    "type": "dev"
   }],
   "bsc-flags": ["-bs-super-errors", "-bs-no-version-header", "-w -48"],
   "package-specs": [{
@@ -17,13 +13,13 @@
     "in-source": false
   }],
   "suffix": ".bs.js",
-  "bs-dependencies": [
-    "@drewschrauf/bs-dom-testing-library",
+  "bs-dev-dependencies": [
+    "@drewschrauf/bs-jest-dom",
+    "@drewschrauf/bs-react-testing-library",
+    "@drewschrauf/bs-user-event",
+    "@glennsl/bs-jest",
     "reason-react"
   ],
-  "bs-dev-dependencies": [
-    "@glennsl/bs-jest",
-    "@drewschrauf/bs-jest-dom"
-  ],
+  "ppx-flags": ["bs-let/ppx"],
   "refmt": 3
 }

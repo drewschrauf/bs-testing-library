@@ -39,39 +39,41 @@ module Message = {
   };
 };
 
-test("render", () =>
-  render(<Counter />) |> expect |> toBeInTheDocument
-);
+test("render", () => {
+  render(<Counter />) |> ignore;
+  screen |> expect |> toBeInTheDocument;
+});
 
-test("query with string matcher", () =>
-  render(<Counter />) |> getByText("Count 0") |> expect |> toBeInTheDocument
-);
+test("query with string matcher", () => {
+  render(<Counter />) |> ignore;
+  screen |> getByText("Count 0") |> expect |> toBeInTheDocument;
+});
 
-test("query with regex matcher", () =>
-  render(<Counter />)
-  |> getByTextRe([%re "/^Count \\d+$/"])
-  |> expect
-  |> toBeInTheDocument
-);
+test("query with regex matcher", () => {
+  render(<Counter />) |> ignore;
+  screen |> getByTextRe([%re "/^Count \\d+$/"]) |> expect |> toBeInTheDocument;
+});
 
-test("query with function matcher", () =>
-  render(<Counter />)
+test("query with function matcher", () => {
+  render(<Counter />) |> ignore;
+  screen
   |> getByTextFn((content, _) => content == "Count 0")
   |> expect
-  |> toBeInTheDocument
-);
+  |> toBeInTheDocument;
+});
 
-test("query with options", () =>
-  render(<Counter />)
+test("query with options", () => {
+  render(<Counter />) |> ignore;
+  screen
   |> getByText("Count", ~exact=false, ~selector="h1")
   |> expect
-  |> toBeInTheDocument
-);
+  |> toBeInTheDocument;
+});
 
 test("firing events", () => {
-  let root = render(<Counter />);
-  root |> getByText("Increment") |> FireEvent.click;
-  root |> getByText("Count 1") |> expect |> toBeInTheDocument;
+  render(<Counter />) |> ignore;
+  screen |> getByText("Increment") |> FireEvent.click;
+  screen |> getByText("Count 1") |> expect |> toBeInTheDocument;
 });
 
 /*
@@ -79,9 +81,9 @@ test("firing events", () => {
  * makes Reason interpret the value as a JavaScript object (Js.t) instead of a Reason record.
  */
 test("firing events with options", () => {
-  let root = render(<Message />);
+  render(<Message />) |> ignore;
 
-  root
+  screen
   |> getByLabelText("Message")
   |> FireEvent.change(~eventInit={
                         "target": {
@@ -89,7 +91,7 @@ test("firing events with options", () => {
                         },
                       });
 
-  root |> getByText("My message") |> expect |> toBeInTheDocument;
+  screen |> getByText("My message") |> expect |> toBeInTheDocument;
 });
 
 /*
@@ -100,9 +102,9 @@ test("firing events with options", () => {
  * anything with it, you probably made a mistake.
  */
 test("multiple assertions", () => {
-  let root = render(<Message />);
+  render(<Message />) |> ignore;
 
-  let input = root |> getByLabelText("Message");
+  let input = screen |> getByLabelText("Message");
 
   /* here's that ignore */
   expect(input) |> toHaveValue("") |> ignore;
