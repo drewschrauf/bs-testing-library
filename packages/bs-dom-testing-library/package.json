@@ -3,8 +3,7 @@
   "version": "0.1.2",
   "license": "MIT",
   "scripts": {
-    "build": "bsb -clean-world -make-world",
-    "watch": "bsb -make-world -w",
+    "build": "bsb -make-world",
     "pretest": "yarn build",
     "test": "jest"
   },

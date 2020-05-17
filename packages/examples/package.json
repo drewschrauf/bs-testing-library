@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "bsb -clean-world -make-world",
-    "watch": "bsb -make-world -w",
+    "build": "bsb -make-world",
     "pretest": "yarn build",
     "test": "jest"
   },
@@ -20,6 +19,7 @@
   },
   "devDependencies": {
     "@drewschrauf/bs-react-testing-library": "0.1.4",
+    "@drewschrauf/bs-user-event": "0.1.0",
     "@glennsl/bs-jest": "^0.5.1",
     "bs-let": "^0.1.16",
     "bs-platform": "^7.2.2",

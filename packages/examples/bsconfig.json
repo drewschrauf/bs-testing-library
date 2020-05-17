@@ -16,6 +16,7 @@
   "bs-dev-dependencies": [
     "@drewschrauf/bs-jest-dom",
     "@drewschrauf/bs-react-testing-library",
+    "@drewschrauf/bs-user-event",
     "@glennsl/bs-jest",
     "reason-react"
   ],
