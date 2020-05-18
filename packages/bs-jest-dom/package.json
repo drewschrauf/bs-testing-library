@@ -1,6 +1,6 @@
 {
   "name": "@drewschrauf/bs-jest-dom",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "scripts": {
     "build": "bsb -make-world",
